@@ -5,10 +5,10 @@
 	if (isset($_POST['username']) and isset($_POST['password'])) {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
-		$query = "SELECT id FROM users WHERE password = '$password' AND username = '$username'";
-		$debug_query = "SELECT id FROM users WHERE password = '<code>".$password."</code>' AND username = '<code>".$username."</code>'";
-
-		$result = $db->query($query);
+		$stmt = $db->prepare("SELECT password FROM users WHERE username = ?");
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$result = $stmt->get_result();
 		if (!$result) {
 			$error = $db->error;
 		} else {
@@ -49,28 +49,19 @@
 	<?php if (isset($error)) {
 		echo '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'.$error.'</div>';
 	} ?>
-		<? if(isset($query) && $_POST['debug']) : ?>
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span></button>
-				<? echo $debug_query ?>
-			</div>
-		<? endif; ?>
-		
+
 		<div class="container">
 			<form action="" method="post" class="form-login">
 				<h1>Hacklight meetup</h1>
 				<h3>Please log in</h2>
 				<label for="inputUsername" class="sr-only">Username</label>
-				<input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+				<input type="text" name="username" id="inputUsername" class="form-control" value="admin" required autofocus>
 				<label for="inputPassword" class="sr-only">Password</label>
 				<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input" checked name="debug" id="inputDebug">
-					<label class="form-check-label" for="exampleCheck1">Cheat</label>
+				<div class="form-group" style="margin-top:10px;">
+					<a  href="/index_like.php">Check username availability</a>
 				</div>
-
 			</form>
 		</div>
 	</body>

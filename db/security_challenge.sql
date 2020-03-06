@@ -86,9 +86,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Dumping data for table `users`
 --
-
 INSERT INTO `users` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'Welc0meT0NetlightEdgeC0nferenceInSt0ckh0lm!');
+(1, 'admin', 'Welc0me-T0-H4cklight-M33tup!');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
